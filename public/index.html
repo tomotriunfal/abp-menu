@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>menu abp: Menus Saludables</title>
+    <meta name="theme-color" content="#18734b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="menu abp" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/mobile-config.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand brand-lockup" href="/">
+        <span class="brand-icon" aria-hidden="true">🍴</span>
+        <span>
+          <strong>Menu ABP</strong>
+          <small>Menús Saludables para Adolescentes</small>
+        </span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Abrir configuraci&oacute;n" aria-expanded="false" data-settings-toggle>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <aside class="settings-panel" id="settingsPanel" aria-hidden="true">
+      <div class="settings-head">
+        <div>
+          <p class="eyebrow">Configuraci&oacute;n</p>
+          <h2>Hidrataci&oacute;n diaria</h2>
+        </div>
+        <button class="ghost" type="button" data-settings-close>Cerrar</button>
+      </div>
+      <label class="theme-switch">
+        <span>
+          <strong>Modo oscuro</strong>
+          <small>Mejor contraste para usar la app con poca luz.</small>
+        </span>
+        <input type="checkbox" data-theme-toggle />
+      </label>
+      <label class="language-select">
+        <span>
+          <strong>Idioma</strong>
+          <small>Cambia los textos principales de la aplicación.</small>
+        </span>
+        <select data-language-select>
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="pt">Português</option>
+        </select>
+      </label>
+      <div class="water-widget">
+        <div class="water-glass" aria-hidden="true">
+          <span id="waterFill"></span>
+        </div>
+        <div class="water-info">
+          <strong id="waterStatus">0 / 1900 ml</strong>
+          <p id="waterGoalText">Ideal para tu edad.</p>
+          <button class="primary" type="button" data-water-add>+200 ml</button>
+          <button class="ghost" type="button" data-water-reset>Reiniciar</button>
+        </div>
+      </div>
+      <form class="custom-dish-form" data-custom-dish-form>
+        <div>
+          <p class="eyebrow" data-custom-dish-label>Plato propio</p>
+          <h2 data-custom-dish-title>Agregar a mis platos</h2>
+        </div>
+        <label>
+          <span data-custom-name-label>Nombre del plato</span>
+          <input name="name" required placeholder="Ej. Ensalada con pollo" />
+        </label>
+        <label>
+          <span data-custom-meal-label>Momento del día</span>
+          <select name="meal" required>
+            <option>Desayuno</option>
+            <option>Almuerzo</option>
+            <option>Merienda</option>
+            <option>Cena</option>
+          </select>
+        </label>
+        <div class="custom-nutrients">
+          <label><span data-custom-calories-label>Calorías</span><input name="calories" type="number" min="0" value="0" /></label>
+          <label><span data-custom-protein-label>Proteínas g</span><input name="protein" type="number" min="0" value="0" /></label>
+          <label><span data-custom-carbs-label>Carbohidratos g</span><input name="carbs" type="number" min="0" value="0" /></label>
+          <label><span data-custom-fat-label>Grasas g</span><input name="fat" type="number" min="0" value="0" /></label>
+          <label><span data-custom-calcium-label>Calcio mg</span><input name="calcium" type="number" min="0" value="0" /></label>
+          <label><span data-custom-iron-label>Hierro mg</span><input name="iron" type="number" min="0" value="0" /></label>
+        </div>
+        <button class="primary" type="submit" data-custom-submit>Guardar plato</button>
+        <p class="form-status" data-custom-status></p>
+      </form>
+    </aside>
+
+    <main class="shell">
+      <section class="chooser" aria-label="Selector de perfil">
+        <div>
+          <p class="step-label">Paso 1</p>
+          <h2>Selecciona tu edad</h2>
+          <div class="segmented" id="ageButtons">
+            <button data-age="6-8"><span>👶</span>6-8 años</button>
+            <button data-age="8-9"><span>👶</span>8-9 años</button>
+            <button data-age="10-12"><span>👶</span>10-12 años</button>
+            <button data-age="13-15"><span>👶</span>13-15 años</button>
+          </div>
+        </div>
+        <div>
+          <p class="step-label">Paso 2</p>
+          <h2>Nivel de actividad</h2>
+          <div class="segmented" id="activityButtons">
+            <button data-activity="normal"><span>🍎</span>Estilo de vida promedio</button>
+            <button data-activity="athlete"><span>〽</span>Deportista</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard">
+        <article class="needs-card">
+          <div class="needs-heading">
+            <div class="needs-icon" aria-hidden="true">↗</div>
+            <div>
+              <h2 id="profileKey">Necesidades Básicas Diarias</h2>
+              <p id="profileMessage"></p>
+              <p class="profile-subtitle" id="profileTitle">10 a 12 años</p>
+            </div>
+          </div>
+          <div class="needs-grid" id="needsGrid"></div>
+        </article>
+
+        <aside class="planner">
+          <div class="planner-head">
+            <div>
+              <p class="eyebrow">Mi día</p>
+              <h2>Platos agregados</h2>
+            </div>
+            <button class="ghost" type="button" data-reset>Limpiar</button>
+          </div>
+          <p class="coach-message" id="coachMessage"></p>
+          <div id="chosenList" class="chosen-list"></div>
+          <div id="progressBars" class="progress-bars"></div>
+        </aside>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Menú del día completo</p>
+            <h2>Platos sugeridos para el perfil elegido</h2>
+          </div>
+        </div>
+        <div class="custom-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-my-dishes-label>Mis platos</p>
+              <h2 data-my-dishes-title>Platos creados por mí</h2>
+            </div>
+          </div>
+          <div class="custom-dish-grid" id="customDishGrid"></div>
+        </div>
+        <div class="menu-grid" id="menuGrid"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

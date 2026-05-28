@@ -1,0 +1,27 @@
+{
+  "name": "menu-abp",
+  "version": "1.0.0",
+  "description": "Menu abp: Menus Saludables, una aplicacion full-stack educativa para perfiles nutricionales adolescentes.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "cap:add:android": "npx cap add android",
+    "cap:add:ios": "npx cap add ios",
+    "cap:sync": "npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "cap:open:ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3",
+    "mongodb": "^6.16.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

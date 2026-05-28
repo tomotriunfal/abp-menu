@@ -1,0 +1,1 @@
+window.MENU_ABP_API_BASE_URL = window.MENU_ABP_API_BASE_URL || "";

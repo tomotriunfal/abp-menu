@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - menu abp</title>
+    <meta name="theme-color" content="#18734b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="menu abp" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/mobile-config.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">menu abp</a>
+      <nav>
+        <a href="/">Planificador</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </header>
+
+    <main class="shell admin-shell">
+      <section class="admin-hero">
+        <p class="eyebrow">Panel de gestión</p>
+        <h1>Agregar platos y asignarlos a perfiles.</h1>
+        <p>Los nuevos platos se guardan en MongoDB cuando `MONGODB_URI` está configurado; en desarrollo sin MongoDB quedan activos en memoria.</p>
+      </section>
+
+      <form class="admin-form" id="dishForm">
+        <label>
+          Nombre del plato
+          <input name="name" required placeholder="Ej. Wrap integral de pollo" />
+        </label>
+        <label>
+          Momento del día
+          <select name="meal" required>
+            <option>Desayuno</option>
+            <option>Almuerzo</option>
+            <option>Merienda</option>
+            <option>Cena</option>
+          </select>
+        </label>
+        <label>
+          Foto URL
+          <input name="image" placeholder="https://..." />
+        </label>
+        <label class="wide">
+          Ingredientes clave
+          <input name="ingredients" required placeholder="pollo, tortilla integral, lechuga, yogur" />
+        </label>
+        <label class="wide">
+          Explicación educativa
+          <textarea name="explanation" required placeholder="Por qué es bueno para el perfil..."></textarea>
+        </label>
+
+        <fieldset>
+          <legend>Edades</legend>
+          <label><input type="checkbox" name="ageRanges" value="6-8" /> 6 - 8 años</label>
+          <label><input type="checkbox" name="ageRanges" value="8-9" /> 8 - 9 años</label>
+          <label><input type="checkbox" name="ageRanges" value="10-12" checked /> 10 - 12 años</label>
+          <label><input type="checkbox" name="ageRanges" value="13-15" /> 13 - 15 años</label>
+        </fieldset>
+        <fieldset>
+          <legend>Actividad</legend>
+          <label><input type="checkbox" name="activities" value="normal" checked /> Estilo de vida promedio</label>
+          <label><input type="checkbox" name="activities" value="athlete" /> Deportista</label>
+        </fieldset>
+
+        <div class="nutrition-inputs">
+          <label>Calorías <input name="calories" type="number" min="0" value="450" /></label>
+          <label>Proteínas g <input name="protein" type="number" min="0" value="20" /></label>
+          <label>Carbohidratos g <input name="carbs" type="number" min="0" value="55" /></label>
+          <label>Grasas g <input name="fat" type="number" min="0" value="15" /></label>
+          <label>Calcio mg <input name="calcium" type="number" min="0" value="180" /></label>
+          <label>Hierro mg <input name="iron" type="number" min="0" value="3" /></label>
+        </div>
+
+        <button class="primary wide" type="submit">Agregar plato</button>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </main>
+
+    <script src="/admin.js"></script>
+  </body>
+</html>

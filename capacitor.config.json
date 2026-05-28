@@ -1,0 +1,8 @@
+{
+  "appId": "cl.menuabp.app",
+  "appName": "menu abp",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  }
+}
