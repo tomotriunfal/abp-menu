@@ -838,6 +838,48 @@ body.dark-mode .custom-section {
   font-size: 0.82rem;
 }
 
+.macro-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.macro-chip {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  min-height: 58px;
+  padding: 9px 8px;
+  border: 1px solid color-mix(in srgb, var(--macro-color) 30%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--macro-color) 12%, #ffffff);
+  text-align: center;
+}
+
+.macro-chip strong {
+  color: var(--macro-color);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.macro-chip small {
+  margin-left: 1px;
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.macro-chip span {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 850;
+  line-height: 1.05;
+}
+
+body.dark-mode .macro-chip {
+  background: color-mix(in srgb, var(--macro-color) 16%, #0b1d1b);
+}
+
 .primary {
   min-height: 42px;
   padding: 10px 14px;

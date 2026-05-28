@@ -405,6 +405,11 @@ function renderCustomDishes() {
 
 function renderDish(dish) {
   const qty = state.chosen[dish.id] || 0;
+  const macros = [
+    ["carbs", tr("carbs"), "#1f8a70"],
+    ["protein", tr("protein"), "#d44d3f"],
+    ["fat", tr("fat"), "#b7791f"]
+  ];
   return `
     <article class="dish-card">
       <img src="${dish.image}" alt="${dish.name}" />
@@ -415,6 +420,18 @@ function renderDish(dish) {
           <p>${dish.explanation}</p>
         </div>
         <p class="ingredients">${dish.ingredients.join(" · ")}</p>
+        <div class="macro-strip" aria-label="Nutrientes principales de ${dish.name}">
+          ${macros
+            .map(
+              ([key, label, color]) => `
+                <div class="macro-chip" style="--macro-color:${color}">
+                  <strong>${Math.round(Number(dish.nutrition[key] || 0))}<small>g</small></strong>
+                  <span>${label}</span>
+                </div>
+              `
+            )
+            .join("")}
+        </div>
         <div class="dish-actions">
           <button class="primary ${qty ? "added" : ""}" data-add="${dish.id}">
             ${qty ? tr("added") : tr("addToDay")}
