@@ -299,6 +299,11 @@ function setText(selector, value) {
   if (element) element.textContent = value;
 }
 
+function setHtml(selector, value) {
+  const element = $(selector);
+  if (element) element.innerHTML = value;
+}
+
 function applyLanguage() {
   document.documentElement.lang = state.language;
   setText(".brand-lockup small", tr("appSubtitle"));
@@ -372,7 +377,7 @@ function renderNeeds(profile) {
   $("#profileKey").textContent = tr("needsTitle");
   $("#profileTitle").textContent = profile.subtitle;
   $("#profileMessage").textContent = profile.message;
-  $("#needsGrid").innerHTML = Object.entries(profile.needs)
+  setHtml("#needsGrid", Object.entries(profile.needs)
     .map(
       ([key, value]) => `
         <div>
@@ -381,7 +386,7 @@ function renderNeeds(profile) {
         </div>
       `
     )
-    .join("");
+    .join(""));
 }
 
 function renderMenu() {
@@ -418,7 +423,7 @@ function renderMenu() {
 
   const activeDishes = scheduledDishes[state.activeDay] || [];
 
-  $("#dayTabs").innerHTML = weekDays
+  setHtml("#dayTabs", weekDays
     .map(
       (day) => `
         <button class="${day === state.activeDay ? "active" : ""}" type="button" data-day="${day}">
@@ -426,9 +431,9 @@ function renderMenu() {
         </button>
       `
     )
-    .join("");
+    .join(""));
 
-  $("#menuGrid").innerHTML = meals
+  setHtml("#menuGrid", meals
     .map((meal) => {
       const items = activeDishes.filter((dish) => dish.meal === meal);
       return `
@@ -438,14 +443,14 @@ function renderMenu() {
         </article>
       `;
     })
-    .join("");
+    .join(""));
 }
 
 function renderCustomDishes() {
   const customItems = customDishesForProfile();
-  $("#customDishGrid").innerHTML = customItems.length
+  setHtml("#customDishGrid", customItems.length
     ? customItems.map(renderDish).join("")
-    : `<p class="empty">${tr("emptyCustomDishes")}</p>`;
+    : `<p class="empty">${tr("emptyCustomDishes")}</p>`);
 }
 
 function renderDish(dish) {
@@ -537,7 +542,7 @@ function renderPlanner() {
     .map(([dishId, qty]) => ({ dish: state.dishes.find((item) => item.id === dishId), qty }))
     .filter((item) => item.dish && item.qty > 0);
 
-  $("#chosenList").innerHTML = chosenItems.length
+  setHtml("#chosenList", chosenItems.length
     ? chosenItems
         .map(
           ({ dish, qty }) => `
@@ -548,9 +553,9 @@ function renderPlanner() {
           `
         )
         .join("")
-    : `<p class='empty'>${tr("emptyPlan")}</p>`;
+    : `<p class='empty'>${tr("emptyPlan")}</p>`);
 
-  $("#progressBars").innerHTML = Object.entries(profile.needs)
+  setHtml("#progressBars", Object.entries(profile.needs)
     .map(([key, target]) => {
       const value = totals[key];
       const pct = Math.min(Math.round((value / target) * 100), 120);
@@ -564,7 +569,7 @@ function renderPlanner() {
         </div>
       `;
     })
-    .join("");
+    .join(""));
 
   $("#coachMessage").textContent = plannerAdvice(totals, profile.needs);
 }
