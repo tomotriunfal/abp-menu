@@ -390,6 +390,10 @@ function renderNeeds(profile) {
 }
 
 function renderMenu() {
+  if (!$("#dayTabs") && $("#menuGrid")) {
+    $("#menuGrid").insertAdjacentHTML("beforebegin", `<div class="day-tabs" id="dayTabs" aria-label="Dias de la semana"></div>`);
+  }
+
   const fillDays = weekDays.filter((day) => day !== "Jueves");
   const baseDishes = state.dishes.filter((dish) => !dish.id.startsWith("custom-"));
   const scheduledDishes = baseDishes
