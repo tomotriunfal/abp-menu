@@ -1,4 +1,4 @@
-const CACHE_NAME = "menu-abp-v19";
+const CACHE_NAME = "menu-abp-v20";
 const APP_SHELL = [
   "/",
   "/admin",

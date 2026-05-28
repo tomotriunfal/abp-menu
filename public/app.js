@@ -394,26 +394,20 @@ function renderMenu() {
     $("#menuGrid").insertAdjacentHTML("beforebegin", `<div class="day-tabs" id="dayTabs" aria-label="Dias de la semana"></div>`);
   }
 
-  const fillDays = weekDays.filter((day) => day !== "Jueves");
   const baseDishes = state.dishes.filter((dish) => !dish.id.startsWith("custom-"));
-  const scheduledDishes = baseDishes
-    .reduce(
-      (schedule, dish) => {
-        const day = fillDays.find((dayName) => !schedule[dayName].some((item) => item.meal === dish.meal)) || fillDays[fillDays.length - 1];
-        schedule[day].push(dish);
-        return schedule;
-      },
-      Object.fromEntries(weekDays.map((day) => [day, []]))
-    );
-  scheduledDishes.Jueves = scheduledDishes.Lunes;
+  const scheduledDishes = Object.fromEntries(weekDays.map((day) => [day, []]));
 
   const dishesByMeal = Object.fromEntries(
     meals.map((meal) => [meal, baseDishes.filter((dish) => dish.meal === meal)])
   );
   const mixedDays = {
-    Viernes: { Desayuno: 2, Almuerzo: 0, Merienda: 1, Cena: 2 },
-    Sábado: { Desayuno: 1, Almuerzo: 2, Merienda: 0, Cena: 1 },
-    Domingo: { Desayuno: 0, Almuerzo: 1, Merienda: 2, Cena: 0 }
+    [weekDays[0]]: { Desayuno: 0, Almuerzo: 0, Merienda: 0, Cena: 0 },
+    [weekDays[1]]: { Desayuno: 1, Almuerzo: 1, Merienda: 1, Cena: 1 },
+    [weekDays[2]]: { Desayuno: 2, Almuerzo: 2, Merienda: 2, Cena: 2 },
+    [weekDays[3]]: { Desayuno: 0, Almuerzo: 0, Merienda: 0, Cena: 0 },
+    [weekDays[4]]: { Desayuno: 2, Almuerzo: 0, Merienda: 1, Cena: 2 },
+    [weekDays[5]]: { Desayuno: 1, Almuerzo: 2, Merienda: 0, Cena: 1 },
+    [weekDays[6]]: { Desayuno: 0, Almuerzo: 1, Merienda: 2, Cena: 0 }
   };
 
   Object.entries(mixedDays).forEach(([day, mealIndexes]) => {
