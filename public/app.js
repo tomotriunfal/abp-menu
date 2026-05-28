@@ -1,6 +1,7 @@
 const state = {
   ageRange: "10-12",
   activity: "normal",
+  activeDay: "Lunes",
   profiles: [],
   dishes: [],
   chosen: {},
@@ -245,6 +246,7 @@ const labelKeys = {
 };
 
 const meals = ["Desayuno", "Almuerzo", "Merienda", "Cena"];
+const weekDays = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
 const waterGoals = {
   "6-8": 1600,
@@ -383,9 +385,52 @@ function renderNeeds(profile) {
 }
 
 function renderMenu() {
+  const fillDays = weekDays.filter((day) => day !== "Jueves");
+  const baseDishes = state.dishes.filter((dish) => !dish.id.startsWith("custom-"));
+  const scheduledDishes = baseDishes
+    .reduce(
+      (schedule, dish) => {
+        const day = fillDays.find((dayName) => !schedule[dayName].some((item) => item.meal === dish.meal)) || fillDays[fillDays.length - 1];
+        schedule[day].push(dish);
+        return schedule;
+      },
+      Object.fromEntries(weekDays.map((day) => [day, []]))
+    );
+  scheduledDishes.Jueves = scheduledDishes.Lunes;
+
+  const dishesByMeal = Object.fromEntries(
+    meals.map((meal) => [meal, baseDishes.filter((dish) => dish.meal === meal)])
+  );
+  const mixedDays = {
+    Viernes: { Desayuno: 2, Almuerzo: 0, Merienda: 1, Cena: 2 },
+    Sábado: { Desayuno: 1, Almuerzo: 2, Merienda: 0, Cena: 1 },
+    Domingo: { Desayuno: 0, Almuerzo: 1, Merienda: 2, Cena: 0 }
+  };
+
+  Object.entries(mixedDays).forEach(([day, mealIndexes]) => {
+    scheduledDishes[day] = meals
+      .map((meal) => {
+        const options = dishesByMeal[meal];
+        return options.length ? options[mealIndexes[meal] % options.length] : null;
+      })
+      .filter(Boolean);
+  });
+
+  const activeDishes = scheduledDishes[state.activeDay] || [];
+
+  $("#dayTabs").innerHTML = weekDays
+    .map(
+      (day) => `
+        <button class="${day === state.activeDay ? "active" : ""}" type="button" data-day="${day}">
+          ${day}
+        </button>
+      `
+    )
+    .join("");
+
   $("#menuGrid").innerHTML = meals
     .map((meal) => {
-      const items = state.dishes.filter((dish) => dish.meal === meal && !dish.id.startsWith("custom-"));
+      const items = activeDishes.filter((dish) => dish.meal === meal);
       return `
         <article class="meal-column">
           <h3>${meal}</h3>
@@ -561,6 +606,7 @@ document.addEventListener("click", async (event) => {
   const waterReset = event.target.closest("[data-water-reset]");
   const themeToggle = event.target.closest("[data-theme-toggle]");
   const languageSelect = event.target.closest("[data-language-select]");
+  const day = event.target.closest("[data-day]")?.dataset.day;
 
   if (settingsToggle) {
     setSettingsOpen(!$("#settingsPanel").classList.contains("open"));
@@ -594,6 +640,10 @@ document.addEventListener("click", async (event) => {
     renderCustomDishes();
     renderMenu();
     renderPlanner();
+  }
+  if (day) {
+    state.activeDay = day;
+    renderMenu();
   }
   if (age) {
     state.ageRange = age;
